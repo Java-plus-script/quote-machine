@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+<style>
+
+.container-fluid{
+  background: hsl(55deg,80%,30%);
+  
+  
+}
+#quote-box{
+  height: 100vh;
+  width: auto;
+  background: hsl(55deg,80%,30%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} 
+
+#heading{
+  color: hsl(48deg, 100%, 80%);
+  
+}
+
+#author {
+  color: hsl(15deg, 82%, 40%);
+}
+
+#new-quote {
+  background-color: hsl(0deg, 50%, 47%);
+  color: hsl(64deg, 82%, 86%);
+}
+#tweet-quote {
+  background-color: hsl(0deg, 50%, 47%);
+  color: hsl(64deg, 82%, 86%);
+}
+
+#text {
+  font-size: 24px;
+  min-height: 180px;
+}
+
+@media only screen and (max-width: 600px) {
+  
+ 
+  #tweet-quote {
+    font-size: 50%;
+  }
+  #new-quote {
+    font-size: 50%;
+  }
+  #text {
+  font-size: 16px;
+  min-height: 120px;
+}
+  #author {
+    font-size: 16px;
+  }
+}
+
+
+</style>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+
+  <body>
+
+<div class="container-fluid">
+ 
+  <div id="quote-box">
+  </div>
+</div>
+
+<script type="text/babel">
+
+
+let arr2 = [
+  {
+    quote: "Always remember you're unique, just like everyone else.",
+    author: "Alison Boulter"
+  },
+  {
+    quote:
+      "The difference between stupidity and genius is that genius has its limits.",
+    author: "Albert Einstein"
+  },
+  {
+    quote: "I know that I am intelligent, because I know that I know nothing.",
+    author: "Socrates"
+  },
+  {
+    quote:
+      "Yesterday I did nothing and today I'm finishing what I did yesterday.",
+    author: "Anonymous"
+  },
+  {
+    quote:
+      "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+    author: "Ralph Waldo Emerson"
+  },
+  { quote: "He who laughs last didn't get it.", author: "Helen Giangregorio" },
+  {
+    quote:
+      "Drinking after work is fine, but if you really want to enjoy working then drink before work.",
+    author: "CoolFunnyQuotes.com"
+  },
+  {
+    quote: "God heals, and the doctor takes the fees.",
+    author: "Benjamin Franklin"
+  },
+  {
+    quote: "If we shouldn't eat at night, why is there a light in the fridge?",
+    author: "Anonymous"
+  },
+  {
+    quote:
+      "My bed is a magical place where I suddenly remember everything I forgot to do.",
+    author: "Anonymous"
+  },
+  {
+    quote: "If you have crazy friends you have everything you'll ever need.",
+    author: "Anonymous"
+  }
+];
+
+let tweetUrl = "";
+let ind = 0;
+
+class FirstQuote extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputQuote:
+        "When science finally locates the center of the universe, some people will be surprised to learn they're not it.",
+      author: "Bernard Bailey"
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    ind = Math.floor(Math.random() * arr2.length);
+    this.setState((state) => ({
+      inputQuote: arr2[ind].quote,
+      author: arr2[ind].author
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <ChildButton
+          input={this.state.inputQuote}
+          author={this.state.author}
+          handleClick={this.handleClick}
+        />
+      </div>
+    );
+  }
+}
+
+class ChildButton extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    tweetUrl =
+      "https://twitter.com/intent/tweet?text=" +
+      encodeURIComponent('"' + this.props.input + '"  ' + this.props.author);
+
+    //console.log(tweetUrl)
+    return (
+      <div>
+        <div className="container">
+        <div className="d-grid gap-2 col-8 mx-auto">
+          <h1 id="heading" class="text-center">
+            Quote machine
+          </h1>
+
+          <div className="card card-body bg-light ">
+            <div
+              id="text"
+              className="d-flex align-items-center justify-content-center"
+              
+            >
+              {this.props.input}
+            </div>
+            <div id="author" className="text-end">
+              {this.props.author}
+            </div>
+          </div>
+        </div>
+        
+          <pre></pre>
+
+  
+        <div className="row gap-2 justify-content-center">
+          <button
+            id="new-quote"
+            className="btn btn-secondary col-4"
+            onClick={this.props.handleClick}
+          >
+            new quote
+          </button>
+
+          <a
+            href={tweetUrl}
+            target="_blank"
+            id="tweet-quote"
+            className=" btn btn-secondary col-3"
+          >
+            Tweet this quote
+          </a>
+    
+        </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<FirstQuote />, document.getElementById("quote-box"));
+</script>
+  </body>
+
+</html>
+
